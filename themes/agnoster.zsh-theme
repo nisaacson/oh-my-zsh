@@ -85,7 +85,24 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue black '%~'
+  prompt_segment blue black '%2~'
+  # directory_name
+}
+
+current_dir_path() {
+    CURRENT=`dirname ${PWD}`
+    if [[ $CURRENT = / ]]; then
+        echo ""
+    elif [[ $PWD = $HOME ]]; then
+        echo ""
+    else
+        CURRENT=$(print -P %3~)
+        echo "${CURRENT%/*}/"
+    fi
+}
+
+directory_name() {
+    echo "%{$fg_bold[cyan]%}$(current_dir_path)%{$reset_color%}%{$fg[red]%}%1~%{$reset_color%}"
 }
 
 # Status:
